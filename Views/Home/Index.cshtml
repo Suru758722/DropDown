@@ -1,0 +1,91 @@
+﻿@model Project4thAug.Models.Information
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+    <h2>Index</h2>
+    <!--Add Jquery Datatable reference files-->
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
+
+    <div style="width:90%;">
+        <button type="button">  @Html.ActionLink("Add Employee", "Add")</button>
+        <table id="Jdatatable" class="table table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th> Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Marital Status</th>
+                    <th>Action</th>
+                   
+
+                </tr>
+            </thead>
+        </table>
+        <div id="suraj">
+ 
+        </div>
+    </div>
+    @section scripts{
+       <script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        $("#Jdatatable").DataTable({
+            "ajax": {
+                "url": "/Home/GetData",
+                "type": "GET",
+                "datatype": "json"
+
+            },
+
+            "columns": [
+                        { "data": "Name", "autoWidth": true },
+                        { "data": "Phone", "autoWidth": true },
+                        { "data": "Email", "autoWidth": true },
+                         {
+                             data:   "MariStatus",
+                             "mRender": function (data, type, full) {
+                                 if (data == "1") {
+                                     return '<input type=\"checkbox\" checked value="' + data + '">';
+                                 } else {
+                                     return '<input type=\"checkbox\" value="' + data + '">';
+                                 }
+                             }
+                         },
+
+            {
+                data:   "Id",
+                "mRender": function (data, type, full){
+
+                    return '<a href=" @Url.Action("Edit","Home")?id=' + data + '" class="editor_edit">Edit</a> / <a href="" class="editor_remove">Delete</a>';
+                }}
+
+            ],
+            rowCallback: function (row, data) {
+                // Set the checked state of the checkbox in the table
+                $('input.editor-active', row).prop('checked', data.active == 1);
+            }
+
+        });
+    });
+
+
+    // Delete a record
+    $('Jdatatable').on('click', 'a.editor_remove', function (e) {
+        e.preventDefault();
+
+        editor.remove($(this).closest('tr'), {
+            title: 'Delete record',
+            message: 'Are you sure you wish to remove this record?',
+            buttons: 'Delete'
+        });
+    });
+        </script>
+    }
