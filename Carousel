@@ -1,0 +1,18 @@
+<div id="dynamiccontentcarousel-main" class="carousel slide" data-ride="carousel" data-interval="2000">
+
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#dynamiccontentcarousel" data-ng-repeat="banner in BannerImagesFirst" data-ng-class="{active : $first}" data-slide-to="{{$index}}"></li>
+                                    </ol>
+
+                                    <div class="carousel-inner" role="listbox">
+                                        <div class="item" ng-repeat="banner in BannerImagesFirst" data-ng-class="{active : $first}">
+
+                                            <img ng-src="~/Uploadedfiles/Banners/{{banner.ImageUrl}}" alt=" carousel {{$index}}" style="width:600px;height:400px" />
+                                        </div>
+                                        <img ng-if="BannerImagesFirst.length ==0" src="~/Content/Images/no_image.png" alt=" carousel {{$index}}" style="width:600px;height:400px" />
+
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="item" ng-class="{active:!$index}" ng-repeat="photo in photoPath">
